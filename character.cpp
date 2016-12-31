@@ -126,8 +126,6 @@ void Dot::reset()
 void Dot::checkpoint(){
     bool a,w,m;
     a=w=m=false;
-    int ac,wc,mc;
-    ac=wc=mc=0;
     for(int i=0;i<20;i++){
         switch(stack[i]){
             case 1:

@@ -175,7 +175,7 @@ bool loadMedia()
     else
     {
         //Render text
-        SDL_Color textColor = { 49, 49, 49 };
+        SDL_Color textColor = { 49, 49, 49 , 255 };
             if( !gTextTexture1.loadFromRenderedText( "3", textColor ) ){
                 printf( "Failed to render text texture!\n" );
                 success = false;

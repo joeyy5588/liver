@@ -190,7 +190,6 @@ void people::checkcollision(Dot &T)
     if(T.isdown){
         if((abs(mPosX-T.mPosX)<53)&&(mPosX>T.mPosX)&&(abs(mPosY-T.mPosY)<60)){
             int i=0;
-            for(i;T.stack[i]!=0;i++){}
             T.stack[i] = peopletype;
             apporder = i+1;
             mPosX=T.mPosX;
@@ -202,7 +201,6 @@ void people::checkcollision(Dot &T)
     }else{
         if((abs(mPosX-T.mPosX)<69)&&(mPosX>T.mPosX)&&(abs(mPosY-T.mPosY)<60)){
             int i=0;
-            for(i;T.stack[i]!=0;i++){}
             T.stack[i] = peopletype;
             apporder = i+1;
             mPosX=T.mPosX;

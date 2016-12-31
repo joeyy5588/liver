@@ -94,7 +94,7 @@ int main( int argc, char* args[] )
 				timeText << ( timer.getTicks() / 100 )<<" m" ;
 
 				//Render text
-				if( !gTimeTextTexture.loadFromRenderedText( timeText.str().c_str(), { 49, 49, 49 } ) )
+				if( !gTimeTextTexture.loadFromRenderedText( timeText.str().c_str(), { 49, 49, 49 , 255 } ) )
 				{
 					printf( "Unable to render time texture!\n" );
 				}
