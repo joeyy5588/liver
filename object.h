@@ -64,15 +64,19 @@ class people
 		//which building to show
 		int peopletype;
     public:
-        people(){isvalid = mVelX = mVelY = mPosX = mPosY = 0; peopletype = rand()%3;}
+        people(){isvalid = mVelX = mVelY = mPosX = mPosY = 0; peopletype = rand()%3+1; append = false; apporder = 0;}
         //whether to show the obstacle
         int isvalid;
         //Shows the dot on the screen
-        void render();
+        void render(Dot&);
 		//Moves the dot
 		void move(int &);
 		//check if trump reach money
 		void checkcollision(Dot&);
+		//check if should append
+		bool append;
+		//append order
+		int apporder;
 
 };
 class mapobject
@@ -91,13 +95,17 @@ class mapobject
         //check
         bool checkobjectrepeat(int, int);
         void move(int &);
-        void render();
+        void render(Dot&);
         void reset();
         money mapmoney[25];
         obstacle mapobstacle[25];
         people mappeople[25];
         //check if trump reach money
 		void checkcollision(Dot&);
+		//append and move
+		void appmove(Dot&);
+		//render stack
+		void renderstack(Dot&);
 
 
     protected:

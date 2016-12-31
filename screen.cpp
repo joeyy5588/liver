@@ -31,6 +31,9 @@ LTexture gBuildingTexture2;
 LTexture gPeopleTexture1;
 LTexture gPeopleTexture2;
 LTexture gPeopleTexture3;
+LTexture gPeopleTexture12;
+LTexture gPeopleTexture22;
+LTexture gPeopleTexture32;
 
 bool init()
 {
@@ -135,6 +138,21 @@ bool loadMedia()
 		success = false;
 	}
 	if( !gPeopleTexture3.loadFromFile( "pic/african_D.png" ) )
+	{
+		printf( "Failed to load dot texture!\n" );
+		success = false;
+	}
+	if( !gPeopleTexture12.loadFromFile( "pic/white_U.png" ) )
+	{
+		printf( "Failed to load dot texture!\n" );
+		success = false;
+	}
+	if( !gPeopleTexture22.loadFromFile( "pic/mexican_U.png" ) )
+	{
+		printf( "Failed to load dot texture!\n" );
+		success = false;
+	}
+	if( !gPeopleTexture32.loadFromFile( "pic/african_U.png" ) )
 	{
 		printf( "Failed to load dot texture!\n" );
 		success = false;

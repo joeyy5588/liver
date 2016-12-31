@@ -10,7 +10,21 @@
 
 //map moving speed
 extern int mapspeed ;
+extern int asset;
+extern int score;
 
+class trump
+{
+    public:
+        trump(){highscore = 0; billionaire=time=champion=superman=angel=false;}
+        int highscore;
+        bool billionaire;
+        bool time;
+        bool champion;
+        bool superman;
+        bool angel;
+
+};
 class Dot
 {
     friend class money;
@@ -40,6 +54,21 @@ class Dot
 		//check if the dot is out of border
 		bool checkborder(int &);
 
+		//The direction of Trump
+		bool isdown;
+
+		//alive or dead
+		bool isdead;
+
+		//stack on trump
+		int stack[20]={0};
+
+		//reset stack
+		void reset();
+
+		//checkpoint;
+		void checkpoint();
+
     private:
 		//The X and Y offsets of the dot
 		int mPosX, mPosY;
@@ -47,7 +76,6 @@ class Dot
 		//The velocity of the dot
 		int mVelX, mVelY;
 
-		//The direction of Trump
-		bool isdown;
+
 };
 #endif

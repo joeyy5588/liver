@@ -11,6 +11,8 @@
 
 //map moving speed
 int mapspeed = -3;
+int asset=0;
+int score=0;
 
 Dot::Dot()
 {
@@ -23,6 +25,7 @@ Dot::Dot()
     mVelY = -2;
 
     isdown = false;
+    isdead = false;
 }
 
 void Dot::handleEvent( SDL_Event& e )
@@ -93,20 +96,55 @@ bool Dot::checkborder(int &scrollingOffset)
     if (mPosY<(0.5*abs(((-scrollingOffset+mPosX+53)%833)-409)+73)){
         //right top
         std::cout<<mPosY<<'\t'<<(abs(((-scrollingOffset+mPosX+60)%833)-409));
+        isdead = true;
         return true;
     }else if (mPosY<(0.5*abs(((-scrollingOffset+mPosX)%833)-358))+33){
         //left top
         std::cout<<mPosY<<'\t'<<(abs(((-scrollingOffset+mPosX)%833)-358));
+        isdead = true;
         return true;
     }else if (mPosY+100>(768-0.5*abs(((-scrollingOffset+mPosX+53)%833)-409))){
         //right bottom
         std::cout<<mPosY+ 100<<'\t'<<(0.5*abs(((-scrollingOffset+mPosX+60)%833)-409));
+        isdead = true;
         return true;
     }else if (mPosY+40>(768-0.5*abs(((-scrollingOffset+mPosX)%833)-358))){
         //left bottom
         std::cout<<mPosY+40<<'\t'<<(768-0.5*abs(((-scrollingOffset+mPosX)%833)-358)+10);
+        isdead = true;
         return true;
     }else{
         return false;
     }
+}
+void Dot::reset()
+{
+    for(int i=0;i<20;i++){
+        stack[i]=0;
+    }
+}
+void Dot::checkpoint(){
+    bool a,w,m;
+    a=w=m=false;
+    int ac,wc,mc;
+    ac=wc=mc=0;
+    for(int i=0;i<20;i++){
+        switch(stack[i]){
+            case 1:
+                w = true;
+                break;
+            case 2:
+                m = true;
+                break;
+            case 3:
+                a = true;
+                break;
+        }
+    }
+    if((a&&w)&&(!m)){
+        isdead = true;
+    }else if(m&&(!(a||w))){
+        isdead = true;
+    }
+
 }

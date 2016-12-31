@@ -71,8 +71,9 @@ int main( int argc, char* args[] )
 
 				dot.move();
 				for(int i=0;i<5;i++){
-                    mapobject[i].move(mapspeed);
                     mapobject[i].checkcollision(dot);
+                    mapobject[i].move(mapspeed);
+                    mapobject[i].appmove(dot);
 				}
 
 				//Scroll background
@@ -80,15 +81,17 @@ int main( int argc, char* args[] )
 
 				if( scrollingOffset < -(gBGTexture.getWidth()) )
 				{
+				    dot.checkpoint();
 				    for(int i=1;i<5;i++){
                         mapobject[i].reset();
                     }
+                    dot.reset();
                     scrollingOffset = 0;
 				}
 
 				//Set text to be rendered
 				timeText.str( "" );
-				timeText << "Distance: " << ( timer.getTicks() / 100 )<<" m" ;
+				timeText << ( timer.getTicks() / 100 )<<" m" ;
 
 				//Render text
 				if( !gTimeTextTexture.loadFromRenderedText( timeText.str().c_str(), { 49, 49, 49 } ) )
@@ -105,10 +108,25 @@ int main( int argc, char* args[] )
 				gBGTexture.render( scrollingOffset + gBGTexture.getWidth(), 0 );
 
 				//Render objects
-				dot.render();
-				for(int i=1;i<5;i++){
-                    mapobject[i].render();
+
+				if(dot.isdown){
+                    dot.render();
+                    for(int i=1;i<5;i++){
+                        mapobject[i].render(dot);
+                    }
+                    for(int i=1;i<5;i++){
+                        mapobject[i].renderstack(dot);
+                    }
+				}else{
+                    for(int i=1;i<5;i++){
+                        mapobject[i].render(dot);
+                    }
+                    dot.render();
+                    for(int i=1;i<5;i++){
+                        mapobject[i].renderstack(dot);
+                    }
 				}
+
 
 				while(start<1){
                     gTextTexture1.render( ( SCREEN_WIDTH - gTextTexture1.getWidth() ) / 2, ( SCREEN_HEIGHT - gTextTexture1.getHeight() ) / 2 );
@@ -154,13 +172,14 @@ int main( int argc, char* args[] )
                     gFont = TTF_OpenFont( "pic/AGENCYB.ttf", 48 );
                     timer.start();
 				}
-                if(dot.checkborder(scrollingOffset)){
+				dot.checkborder(scrollingOffset);
+                if(dot.isdead){
                     gTextTexture4.render( ( SCREEN_WIDTH - gTextTexture4.getWidth() ) / 2, ( SCREEN_HEIGHT - gTextTexture4.getHeight() ) / 2 );
                     SDL_RenderPresent( gRenderer );
-                    SDL_Delay(1000);
+                    SDL_Delay(3000);
                     break;
                 }
-                gTimeTextTexture.render( ( SCREEN_WIDTH - gTimeTextTexture.getWidth() ) / 2,0 );
+                gTimeTextTexture.render( 0,0 );
 
 				//Update screen
 				SDL_RenderPresent( gRenderer );
