@@ -129,7 +129,7 @@ void obstacle::checkcollision(Dot &T)
                 T.isdead=true;
             }
         }else{
-            if((abs(mPosX-T.mPosX)<39)&&(mPosX>T.mPosX)&&((T.mPosY-mPosY)>220)&&((T.mPosY-mPosY)<260)){
+            if((abs(mPosX-T.mPosX)<39)&&(mPosX>T.mPosX)&&((T.mPosY-mPosY)>220)&&((T.mPosY-mPosY)<250)){
                 T.isdead=true;
             }
         }

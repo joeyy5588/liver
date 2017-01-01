@@ -11,5 +11,24 @@
 #include "screen.h"
 #include "mission.h"
 #include "object.h"
+#include "menu.h"
+#include "gButtons.h"
+
+int menuevent();
+
+void normalmode();
+
+void pausemode();
+
+void goldmode();
+
+void invinciblemode();
+
+void medalmode();
+
+void slowmode();
+
+void reset();
+
 
 #endif
