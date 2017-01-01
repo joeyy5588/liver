@@ -9,6 +9,7 @@
 #include <SDL_ttf.h>
 #include "map.h"
 
+
 //Starts up SDL and creates window
 bool init();
 
@@ -39,5 +40,7 @@ extern LTexture gPeopleTexture3;
 extern LTexture gPeopleTexture12;
 extern LTexture gPeopleTexture22;
 extern LTexture gPeopleTexture32;
+
+
 
 #endif

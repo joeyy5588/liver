@@ -35,6 +35,8 @@ LTexture gPeopleTexture12;
 LTexture gPeopleTexture22;
 LTexture gPeopleTexture32;
 
+
+
 bool init()
 {
 	//Initialization flag
@@ -163,6 +165,13 @@ bool loadMedia()
 		printf( "Failed to load background texture!\n" );
 		success = false;
 	}
+	//Load pause state
+	if( !gPausePromptTexture.loadFromFile( "pic/pause.png" ) )
+	{
+		printf( "Failed to load background texture!\n" );
+		success = false;
+	}
+
 
     //Open the font
     gFont = TTF_OpenFont( "pic/AGENCYB.ttf", 150 );
@@ -196,13 +205,6 @@ bool loadMedia()
             if( !gStartPromptTexture.loadFromRenderedText( "Press S to Start or Stop the Timer", textColor ) )
             {
                 printf( "Unable to render start/stop prompt texture!\n" );
-                success = false;
-            }
-
-            //Load pause prompt texture
-            if( !gPausePromptTexture.loadFromRenderedText( "Press P to Pause or Unpause the Timer", textColor ) )
-            {
-                printf( "Unable to render pause/unpause prompt texture!\n" );
                 success = false;
             }
     }

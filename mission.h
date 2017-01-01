@@ -26,8 +26,6 @@ class LTimer
 		//Checks the status of the timer
 		bool isStarted();
 		bool isPaused();
-
-    private:
 		//The clock time when the timer started
 		Uint32 mStartTicks;
 
