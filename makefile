@@ -1,9 +1,9 @@
-SDL_include=C:\SDL2\i686-w64-mingw32\include\SDL2
-SDL_lib=C:\SDL2\i686-w64-mingw32\lib
-SDL_image_include=C:\SDL2_image\i686-w64-mingw32\include\SDL2
-SDL_image_lib=C:\SDL2_image\i686-w64-mingw32\lib
-SDL_ttf_include=C:\SDL2_ttf\i686-w64-mingw32\include\SDL2
-SDL_ttf_lib=C:\SDL2_ttf\i686-w64-mingw32\lib
+SDL_include="C:\Users\joey\Desktop\台大\計算機程式\lib_SDL\SDL2-2.0.3\i686-w64-mingw32\include\SDL2"
+SDL_lib="C:\Users\joey\Desktop\台大\計算機程式\lib_SDL\SDL2-2.0.3\i686-w64-mingw32\lib"
+SDL_image_include=C:\Users\joey\Desktop\台大\計算機程式\lib_SDL2_image-2.0.1\i686-w64-mingw32\include\SDL2
+SDL_image_lib=C:\Users\joey\Desktop\台大\計算機程式\lib_SDL2_image-2.0.1\i686-w64-mingw32\lib
+SDL_ttf_include="C:\Users\joey\Desktop\台大\計算機程式\lib_SDL2_ttf-2.0.14\i686-w64-mingw32\include\SDL2"
+SDL_ttf_lib="C:\Users\joey\Desktop\台大\計算機程式\lib_SDL2_ttf-2.0.14\i686-w64-mingw32\lib"
 output=output.exe
 
 all: main 
