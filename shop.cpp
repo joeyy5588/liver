@@ -30,7 +30,7 @@ void shopbutton::render()
 
   void shopbutton::handleEvent( SDL_Event* e )
   {
-    if( e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN|| e->type == SDL_MOUSEWHEEL_NORMAL||e->type==SDL_MOUSEWHEEL_FLIPPED )
+    if( e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN )
 	{
 		//Get mouse position
 		int x, y;
