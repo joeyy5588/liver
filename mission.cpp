@@ -8,104 +8,189 @@
 #include <iostream>
 #include <SDL_ttf.h>
 
-LTimer::LTimer()
+LTexture missiondefault;
+LTexture missionpress;
+LTexture sgold;
+LTexture sscore;
+LTexture sdistance;
+LTexture mission1;
+LTexture mission2;
+LTexture mission3;
+LButton home2;
+
+std::stringstream goldmoney;
+std::stringstream bestscore;
+std::stringstream bestdistance;
+std::stringstream m1d;
+std::stringstream m2g;
+std::stringstream m3p;
+
+void substract()
 {
-    //Initialize the variables
-    mStartTicks = 0;
-    mPausedTicks = 0;
-
-    mPaused = false;
-    mStarted = false;
-}
-
-void LTimer::start()
-{
-    //Start the timer
-    mStarted = true;
-
-    //Unpause the timer
-    mPaused = false;
-
-    //Get the current clock time
-    mStartTicks = SDL_GetTicks();
-	mPausedTicks = 0;
-}
-
-void LTimer::stop()
-{
-    //Stop the timer
-    mStarted = false;
-
-    //Unpause the timer
-    mPaused = false;
-
-	//Clear tick variables
-	mStartTicks = 0;
-	mPausedTicks = 0;
-}
-
-void LTimer::pause()
-{
-    //If the timer is running and isn't already paused
-    if( mStarted && !mPaused )
-    {
-        //Pause the timer
-        mPaused = true;
-
-        //Calculate the paused ticks
-        mPausedTicks = SDL_GetTicks() - mStartTicks;
-		mStartTicks = 0;
+    mis1-=distance;
+    mis2-=asset;
+    mis3-=score;
+    if(mis1<0){
+        m1+=1;
+        mis1 = (2000+2000*m1);
+        totalmoney+=25;
+    }
+    if(mis2<0){
+        m2+=1;
+        mis2 = (100+100*m2);
+        totalmoney+=25;
+    }
+    if(mis3<0){
+        m3+=1;
+        mis3 = (100+100*m3);
+        totalmoney+=25;
     }
 }
 
-void LTimer::unpause()
+void add()
 {
-    //If the timer is running and paused
-    if( mStarted && mPaused )
+    goldmoney.str("");
+    bestscore.str("");
+    bestdistance.str("");
+    m1d.str("");
+    m2g.str("");
+    m3p.str("");
+    goldmoney<<totalmoney;
+    bestdistance<<highdistance;
+    bestscore<<highscore;
+    m1d<<mis1;
+    m2g<<mis2;
+    m3p<<mis3;
+}
+
+bool missionloadMedia()
+{
+	//Loading success flag
+	bool success = true;
+
+	//Load default surface
+	missiondefault. loadFromFile( "pic/mission1.png" );
+	if( !missiondefault. loadFromFile( "pic/mission1.png" ) )
+	{
+		printf( "Failed to load button sprite texture!\n" );
+		success = false;
+	}
+	missionpress. loadFromFile( "pic/mission2.png" );
+	if( !missionpress. loadFromFile( "pic/mission2.png" ) )
+	{
+		printf( "Failed to load button sprite texture!\n" );
+		success = false;
+	}
+	gFont = TTF_OpenFont( "pic/AGENCYB.ttf", 60 );
+    //TTF_SetFontStyle(gfont, TTF_STYLE_BOLD);
+    if( gFont == NULL )
     {
-        //Unpause the timer
-        mPaused = false;
-
-        //Reset the starting ticks
-        mStartTicks = SDL_GetTicks() - mPausedTicks;
-
-        //Reset the paused ticks
-        mPausedTicks = 0;
+        printf( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() );
+        success = false;
     }
-}
-
-Uint32 LTimer::getTicks()
-{
-	//The actual timer time
-	Uint32 time = 0;
-
-    //If the timer is running
-    if( mStarted )
+    else
     {
-        //If the timer is paused
-        if( mPaused )
-        {
-            //Return the number of ticks when the timer was paused
-            time = mPausedTicks;
-        }
-        else
-        {
-            //Return the current time minus the start time
-            time = SDL_GetTicks() - mStartTicks;
-        }
+        //Render text
+        SDL_Color textColor = { 255, 255, 255 };
+            if( !sgold.loadFromRenderedText( goldmoney.str().c_str(), textColor ) ){
+                printf( "Failed to render text texture!\n" );
+                success = false;
+            }
+            if( !sdistance.loadFromRenderedText(bestdistance.str().c_str(), textColor ) ){
+                printf( "Failed to render text texture!\n" );
+                success = false;
+            }
+            if( !sscore.loadFromRenderedText( bestscore.str().c_str(), textColor ) ){
+                printf( "Failed to render text texture!\n" );
+                success = false;
+            }
+            if( !mission1.loadFromRenderedText( m1d.str().c_str(), textColor ) ){
+                printf( "Failed to render text texture!\n" );
+                success = false;
+            }
+            if( !mission2.loadFromRenderedText( m2g.str().c_str(), textColor ) ){
+                printf( "Failed to render text texture!\n" );
+                success = false;
+            }
+            if( !mission3.loadFromRenderedText( m3p.str().c_str(), textColor ) ){
+                printf( "Failed to render text texture!\n" );
+                success = false;
+            }
+
     }
-
-    return time;
+    home2.setPosition(885,19);
+    home2.BUTTON_HEIGHT = 104;
+    home2.BUTTON_WIDTH = 104;
+	return success;
 }
-
-bool LTimer::isStarted()
+void missionclose()
 {
-	//Timer is running and paused or unpaused
-    return mStarted;
+    missiondefault.free();
+    sgold.free();
+    sdistance.free();
+    sscore.free();
+    mission1.free();
+    mission2.free();
+    mission3.free();
 }
-
-bool LTimer::isPaused()
+void mission()
 {
-	//Timer is running and paused
-    return mPaused && mStarted;
+	//Start up SDL and create window
+		//Load media
+		add();
+		if( !missionloadMedia() )
+		{
+			printf( "Failed to load media!\n" );
+		}
+		else
+		{
+			//Main loop flag
+			bool quit = false;
+
+			//Event handler
+			SDL_Event e;
+
+
+           missiondefault.render(0,0);
+
+			//While application is running
+			while( !quit )
+			{
+
+
+               				//Handle events on queue
+				while( SDL_PollEvent( &e ) != 0 )
+				{
+					//User requests quit
+					if( e.type == SDL_QUIT )
+					{
+						quit = true;
+					}
+					home2.handleEvent(&e);
+				}
+                add();
+
+                SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+                SDL_RenderClear( gRenderer );
+                missiondefault.render(0,0);
+                if(home2.show==true) missionpress.render(0,0);
+
+				sgold.render(799,160);
+                sscore.render(667,242);
+                sdistance.render(667,323);
+                mission1.render(405,460);
+                mission2.render(405,548);
+                mission3.render(405,637);//Update the surface
+				SDL_RenderPresent( gRenderer );
+				if(home2.press==true)  {home2.show=false; home2.press = false;break;}
+
+
+
+			}
+		}
+
+
+	//Free resources and close SDL
+	missionclose();
+
 }

@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <string>
 #include <iostream>
+#include <iomanip>
 #include <SDL_ttf.h>
 #include "game.h"
 
@@ -12,6 +13,10 @@ double nowTime = 0;
 double unprocessedstartTime = 0;
 double unprocessedendTime = 0;
 double pauseTime = 0;
+int abstartTime = 0;
+int abnowTime = 0;
+int dtime = 0;
+bool halfquit = false;
 
 void normalmode()
 {
@@ -38,6 +43,8 @@ void normalmode()
 
     //In memory text stream
     std::stringstream timeText;
+    std::stringstream timeText2;
+    std::stringstream timeText3;
 
     int turn = 0;
     //While application is running
@@ -56,11 +63,13 @@ void normalmode()
                 {
                     case SDLK_p: pausemode(); break;
                 }
+                if(halfquit){
+                    return;
+                }
             }
             //Handle input for the dot
             dot.handleEvent( e );
         }
-
 
 
         dot.move();
@@ -86,7 +95,12 @@ void normalmode()
         //Set text to be rendered
         timeText.str( "" );
         nowTime = SDL_GetTicks()-3000;
-        timeText << (int)( ((nowTime-lastTime)-pauseTime) / 100 )<<" m               "<<score<<"          $"<<asset ;
+        timeText <<"Score: "<<std::setw(8)<<score<<"      "<<"Gold: $ "<<std::setw(8)<<asset
+        << "        Distance: "<<std::setw(8)<<(int)( ((nowTime-lastTime)-pauseTime) / 100 );
+        int tempdistance ;
+        tempdistance = (int)( ((nowTime-lastTime)-pauseTime) / 100 );
+        //timeText2 << "Distance: "<<"            "<<"m"<<"            "<<"Score: "<<"            "<<"$ ";
+        /*timeText3 << "                    "<<score<<"                    "<<asset;*/
         unprocessedendTime = unprocessedstartTime =0;
 
 
@@ -95,6 +109,14 @@ void normalmode()
         {
             printf( "Unable to render time texture!\n" );
         }
+        /*if( !gTimeTextTexture2.loadFromRenderedText( timeText2.str().c_str(), { 49, 49, 49 } ) )
+        {
+            printf( "Unable to render time texture!\n" );
+        }
+        if( !gTimeTextTexture3.loadFromRenderedText( timeText3.str().c_str(), { 49, 49, 49 } ) )
+        {
+            printf( "Unable to render time texture!\n" );
+        }*/
 
         //Clear screen
         SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
@@ -168,14 +190,31 @@ void normalmode()
             start++;
             gFont = TTF_OpenFont( "pic/AGENCYB.ttf", 48 );
         }
+        if(tempdistance>1500) mapspeed = -6;
+        if(tempdistance==(500+500*triggeredtime)) {
+            triggered = true;
+            abstartTime = SDL_GetTicks();
+            triggeredtime++;
+        }
+        abnowTime = SDL_GetTicks();
+        dtime = abnowTime - abstartTime;
+        if(billionaire||timemachine||champion||superman){
+
+            dot.mapevent(dtime);
+        }
         dot.checkborder(scrollingOffset);
         if(dot.isdead){
+            Mix_PlayChannel( -1, gdead, 0 );
+            distance = (int)( ((nowTime-lastTime)-pauseTime) / 100 );
             gTextTexture4.render( ( SCREEN_WIDTH - gTextTexture4.getWidth() ) / 2, ( SCREEN_HEIGHT - gTextTexture4.getHeight() ) / 2 );
             SDL_RenderPresent( gRenderer );
             SDL_Delay(3000);
             break;
         }
+
         gTimeTextTexture.render( 0,0 );
+        /*gTimeTextTexture2.render( SCREEN_WIDTH/2-200,0 );
+        gTimeTextTexture3.render( 0,0 );*/
 
         //Update screen
         SDL_RenderPresent( gRenderer );
@@ -200,6 +239,7 @@ void pausemode()
                     switch( e.key.keysym.sym )
                     {
                         case SDLK_p: pausestate = false; break;
+                        case SDLK_q: pausestate = false; halfquit = true; break;
                     }
                 }
             }
@@ -219,32 +259,21 @@ void pausemode()
     pauseTime+=(unprocessedendTime-unprocessedstartTime);
 }
 
-void goldmode()
-{
-
-}
-
-void invinciblemode()
-{
-
-}
-
-void slowmode()
-{
-
-}
-
 void reset()
 {
     asset = 0;
     score = 0;
+    distance = 0;
     nowTime = 0;
     lastTime = 0;
     pauseTime = 0;
+    triggeredtime = 0;
+    halfquit = false;
 }
 
 int main( int argc, char* args[] )
 {
+	loadfile();
 	srand(time(0));
 	//The application timer
 	if( !init() )
@@ -260,16 +289,33 @@ int main( int argc, char* args[] )
 		}
 		else
 		{
-			switch(menu()){
-                case 1:
-                    do{
+			Mix_VolumeMusic(MIX_MAX_VOLUME/2);
+			Mix_PlayMusic( gMusic, -1 );
+			do{
+                switch(menu()){
+                    case 1:
+                        Mix_VolumeMusic(MIX_MAX_VOLUME/4);
                         normalmode();
+                        if(!halfquit){
+                            totalmoney+=asset;
+                            if(score>highscore) highscore = score;
+                            if(distance>highdistance) highdistance = distance;
+                            substract();
+                        }
                         reset();
-                    }while(menu()!=4);
-                    break;
-                case 4:
-                    break;
-			}
+                        savefile();
+                        break;
+                    case 2 :
+                        shop();
+                        savefile();
+                        break;
+                    case 3:
+                        mission();
+                        break;
+                    case 4:
+                        break;
+                }
+			}while(menu()!=4);
 		}
 	}
 

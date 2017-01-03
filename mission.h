@@ -8,33 +8,21 @@
 #include <sstream>
 #include <iostream>
 #include <SDL_ttf.h>
-class LTimer
-{
-    public:
-		//Initializes variables
-		LTimer();
+#include "map.h"
+#include "screen.h"
+#include "gButtons.h"
+#include "trump.h"
+#include "character.h"
 
-		//The various clock actions
-		void start();
-		void stop();
-		void pause();
-		void unpause();
+bool missionloadMedia();
 
-		//Gets the timer's time
-		Uint32 getTicks();
+void missionclose();
 
-		//Checks the status of the timer
-		bool isStarted();
-		bool isPaused();
-		//The clock time when the timer started
-		Uint32 mStartTicks;
+void mission();
 
-		//The ticks stored when the timer was paused
-		Uint32 mPausedTicks;
+void add();
 
-		//The timer status
-		bool mPaused;
-		bool mStarted;
-};
+void substract();
+
 
 #endif
