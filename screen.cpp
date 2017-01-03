@@ -2,6 +2,7 @@
 #include "map.h"
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <stdio.h>
 #include <cstdlib>
 #include <string>
@@ -14,6 +15,15 @@ const int SCREEN_HEIGHT = 768;
 
 int start_count = 0;
 
+//The music that will be played
+Mix_Music *gMusic = NULL;
+
+//The sound effects that will be used
+Mix_Chunk *gcoin = NULL;
+Mix_Chunk *gbump = NULL;
+Mix_Chunk *gdead = NULL;
+Mix_Chunk *gplus = NULL;
+
 //Scene textures
 LTexture gDotTexture1;
 LTexture gDotTexture2;
@@ -23,6 +33,8 @@ LTexture gTextTexture2;
 LTexture gTextTexture3;
 LTexture gTextTexture4;
 LTexture gTimeTextTexture;
+LTexture gTimeTextTexture2;
+LTexture gTimeTextTexture3;
 LTexture gPausePromptTexture;
 LTexture gStartPromptTexture;
 LTexture gMoneyTexture;
@@ -90,6 +102,12 @@ bool init()
                     printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
                     success = false;
                 }
+                 //Initialize SDL_mixer
+				if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+				{
+					printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+					success = false;
+				}
 
 			}
 		}
@@ -171,7 +189,41 @@ bool loadMedia()
 		printf( "Failed to load background texture!\n" );
 		success = false;
 	}
+    //Load music
+	gMusic = Mix_LoadMUS( "pic/Jay_Jay.wav" );
+	if( gMusic == NULL )
+	{
+		printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
+		success = false;
+	}
+	//Load sound effects
+	gcoin = Mix_LoadWAV( "pic/coin.wav" );
+	if( gcoin == NULL )
+	{
+		printf( "Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+		success = false;
+	}
 
+	gbump = Mix_LoadWAV( "pic/wall.mp4.wav" );
+	if( gbump == NULL )
+	{
+		printf( "Failed to load high sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+		success = false;
+	}
+
+	gdead = Mix_LoadWAV( "pic/dead.wav" );
+	if( gdead == NULL )
+	{
+		printf( "Failed to load medium sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+		success = false;
+	}
+
+	gplus = Mix_LoadWAV( "pic/plus.wav" );
+	if( gplus == NULL )
+	{
+		printf( "Failed to load low sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+		success = false;
+	}
 
     //Open the font
     gFont = TTF_OpenFont( "pic/AGENCYB.ttf", 150 );
@@ -222,6 +274,8 @@ void close()
     gTextTexture3.free();
     gTextTexture4.free();
     gTimeTextTexture.free();
+    gTimeTextTexture2.free();
+    gTimeTextTexture3.free();
 	gStartPromptTexture.free();
 	gPausePromptTexture.free();
 	gMoneyTexture.free();
@@ -231,6 +285,19 @@ void close()
     gPeopleTexture2.free();
     gPeopleTexture3.free();
 
+    //Free the sound effects
+	Mix_FreeChunk( gcoin );
+	Mix_FreeChunk( gbump );
+	Mix_FreeChunk( gdead );
+	Mix_FreeChunk( gplus );
+	gcoin = NULL;
+	gbump = NULL;
+	gdead = NULL;
+	gplus = NULL;
+
+	//Free the music
+	Mix_FreeMusic( gMusic );
+	gMusic = NULL;
     //Free global font
     TTF_CloseFont( gFont );
     gFont = NULL;

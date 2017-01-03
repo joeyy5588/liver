@@ -2,6 +2,7 @@
 #define SCREEN_H
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <stdio.h>
 #include <cstdlib>
 #include <string>
@@ -21,6 +22,12 @@ void close();
 
 extern const int SCREEN_WIDTH ;
 extern const int SCREEN_HEIGHT ;
+extern Mix_Music *gMusic ;
+extern Mix_Chunk *gcoin ;
+extern Mix_Chunk *gbump ;
+extern Mix_Chunk *gdead ;
+extern Mix_Chunk *gplus ;
+
 extern LTexture gDotTexture1;
 extern LTexture gDotTexture2;
 extern LTexture gBGTexture;
@@ -29,6 +36,8 @@ extern LTexture gTextTexture2;
 extern LTexture gTextTexture3;
 extern LTexture gTextTexture4;
 extern LTexture gTimeTextTexture;
+extern LTexture gTimeTextTexture2;
+extern LTexture gTimeTextTexture3;
 extern LTexture gPausePromptTexture;
 extern LTexture gStartPromptTexture;
 extern LTexture gMoneyTexture;
