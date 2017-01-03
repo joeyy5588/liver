@@ -12,10 +12,14 @@
 
 
 class LButton
-{ friend  bool  menuloadMedia();
-  friend  bool  shoploadMedia();
-  friend  void shopclose();
-  friend  void menuclose();
+{
+    friend  bool  menuloadMedia();
+    friend  bool  shoploadMedia();
+    friend  bool  missionloadMedia();
+
+    friend  void shopclose();
+    friend  void missionclose();
+    friend  void menuclose();
 
 	public:
 		//Initializes internal variables
@@ -36,9 +40,6 @@ class LButton
 
         int BUTTON_WIDTH;
         int BUTTON_HEIGHT;
-      //  int
-
-	private:
 		//Top left position
 		SDL_Point mPosition;
 

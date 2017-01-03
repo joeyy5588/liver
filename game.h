@@ -2,6 +2,7 @@
 #define GAME_H
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <stdio.h>
 #include <cstdlib>
 #include <string>
@@ -13,20 +14,15 @@
 #include "object.h"
 #include "menu.h"
 #include "gButtons.h"
+#include "trump.h"
+#include "shop.h"
+//#include "shop.h"
 
 int menuevent();
 
 void normalmode();
 
 void pausemode();
-
-void goldmode();
-
-void invinciblemode();
-
-void medalmode();
-
-void slowmode();
 
 void reset();
 
