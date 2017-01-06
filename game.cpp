@@ -291,8 +291,10 @@ int main( int argc, char* args[] )
 		{
 			Mix_VolumeMusic(MIX_MAX_VOLUME/2);
 			Mix_PlayMusic( gMusic, -1 );
+			int a;
 			do{
-                switch(menu()){
+                a = menu();
+                switch(a){
                     case 1:
                         Mix_VolumeMusic(MIX_MAX_VOLUME/4);
                         normalmode();
@@ -315,7 +317,7 @@ int main( int argc, char* args[] )
                     case 4:
                         break;
                 }
-			}while(menu()!=4);
+			}while(a!=4);
 		}
 	}
 
