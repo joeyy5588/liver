@@ -91,7 +91,7 @@ bool missionloadMedia()
     else
     {
         //Render text
-        SDL_Color textColor = { 255, 255, 255 };
+        SDL_Color textColor = { 255, 255, 255, 255 };
             if( !sgold.loadFromRenderedText( goldmoney.str().c_str(), textColor ) ){
                 printf( "Failed to render text texture!\n" );
                 success = false;

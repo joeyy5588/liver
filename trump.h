@@ -1,5 +1,5 @@
-#ifndef TRUMP.H
-#define TRUMP.H
+#ifndef TRUMP_H
+#define TRUMP_H
 
 extern int totalmoney;
 extern int highscore;

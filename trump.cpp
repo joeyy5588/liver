@@ -32,7 +32,6 @@ void savefile(){
 void loadfile(){
     fstream file2;
     file2.open("temp.txt", ios::in);
-    int a;
     file2>>totalmoney>>highscore>>highdistance>>m1>>m2>>m3>>mis1>>mis2>>mis3>>
     billionaire>>timemachine>>champion>>superman>>puzzle1>>puzzle2>>puzzle3>>puzzle4;
     file2.close();

@@ -46,7 +46,6 @@ void normalmode()
     std::stringstream timeText2;
     std::stringstream timeText3;
 
-    int turn = 0;
     //While application is running
     while( !quit )
     {
@@ -105,7 +104,7 @@ void normalmode()
 
 
         //Render text
-        if( !gTimeTextTexture.loadFromRenderedText( timeText.str().c_str(), { 49, 49, 49 } ) )
+        if( !gTimeTextTexture.loadFromRenderedText( timeText.str().c_str(), { 49, 49, 49, 255 } ) )
         {
             printf( "Unable to render time texture!\n" );
         }
