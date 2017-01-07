@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <SDL_ttf.h>
 #include "game.h"
+#include <windows.h>
 
 double lastTime = 0;
 double nowTime = 0;
@@ -273,6 +274,8 @@ void reset()
 
 int main( int argc, char* args[] )
 {
+	HWND hWnd = GetConsoleWindow();
+    ShowWindow( hWnd, SW_HIDE );
 	loadfile();
 	srand(time(0));
 	//The application timer
