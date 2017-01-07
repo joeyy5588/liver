@@ -7,11 +7,15 @@
 #include <string>
 #include <iostream>
 #include <SDL_ttf.h>
+#include "trump.h"
 
 //map moving speed
 extern int mapspeed ;
 extern int asset;
 extern int score;
+extern int distance;
+extern int triggeredtime;
+extern bool triggered;
 
 class trump
 {
@@ -69,13 +73,13 @@ class Dot
 		//checkpoint;
 		void checkpoint();
 
+		void mapevent(int);
+
     private:
 		//The X and Y offsets of the dot
 		int mPosX, mPosY;
 
 		//The velocity of the dot
 		int mVelX, mVelY;
-
-
 };
 #endif

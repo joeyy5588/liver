@@ -93,11 +93,13 @@ void money::checkcollision(Dot &T)
 {
     if(T.isdown){
         if((abs(mPosX-T.mPosX)<69)&&(mPosX>T.mPosX)&&(abs(mPosY-T.mPosY)<64)){
+            Mix_PlayChannel( -1, gcoin, 0 );
             isvalid = 0;
             asset++;
         }
     }else{
         if((abs(mPosX-T.mPosX)<69)&&(mPosX>T.mPosX)&&(abs(mPosY-T.mPosY)<50)){
+            Mix_PlayChannel( -1, gcoin, 0 );
             isvalid = 0;
             asset++;
         }
@@ -126,10 +128,12 @@ void obstacle::checkcollision(Dot &T)
     if(buildingtype==0){
         if(T.isdown){
             if((abs(mPosX-T.mPosX)<53)&&(mPosX>T.mPosX)&&((T.mPosY-mPosY)>160)&&((T.mPosY-mPosY)<237)){
+                Mix_PlayChannel( -1, gbump, 0 );
                 T.isdead=true;
             }
         }else{
-            if((abs(mPosX-T.mPosX)<39)&&(mPosX>T.mPosX)&&((T.mPosY-mPosY)>220)&&((T.mPosY-mPosY)<260)){
+            if((abs(mPosX-T.mPosX)<39)&&(mPosX>T.mPosX)&&((T.mPosY-mPosY)>220)&&((T.mPosY-mPosY)<250)){
+                Mix_PlayChannel( -1, gbump, 0 );
                 T.isdead=true;
             }
         }
@@ -137,10 +141,12 @@ void obstacle::checkcollision(Dot &T)
     if(buildingtype==1){
         if(T.isdown){
             if((abs(mPosX-T.mPosX)<53)&&(mPosX>T.mPosX)&&((T.mPosY-mPosY)>102)&&((T.mPosY-mPosY)<163)){
+                Mix_PlayChannel( -1, gbump, 0 );
                 T.isdead=true;
             }
         }else{
             if((abs(mPosX-T.mPosX)<60)&&(mPosX>T.mPosX)&&((T.mPosY-mPosY)>121)&&((T.mPosY-mPosY)<187)){
+                Mix_PlayChannel( -1, gbump, 0 );
                 T.isdead=true;
             }
         }
